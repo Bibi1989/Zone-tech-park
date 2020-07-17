@@ -5,12 +5,15 @@ import styled from "styled-components";
 const NavBar = () => {
   return (
     <Nav>
-      <H1>Nav Bar</H1>
+      <H1>Movie App</H1>
     </Nav>
   );
 };
 
 export default NavBar;
 
-const Nav = styled.div``;
+const Nav = styled.div`
+  padding: 10px 10%;
+  border-bottom: 1px solid #cccccc;
+`;
 const H1 = styled.div``;

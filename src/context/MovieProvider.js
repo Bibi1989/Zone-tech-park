@@ -6,10 +6,12 @@ export const MovieContext = createContext();
 
 const FETCHALLMOVIES = "FETCHALLMOVIES";
 const SEASON = "SEASON";
+const SEASON_COUNT = "SEASON_COUNT";
 
 const initialState = {
   seasons: null,
   episodes: null,
+  counts: null,
 };
 
 const reducer = (state, action) => {
@@ -24,6 +26,11 @@ const reducer = (state, action) => {
         ...state,
         episodes: action.payload,
       };
+    case SEASON_COUNT:
+      return {
+        ...state,
+        counts: action.payload,
+      };
 
     default:
       return state;
@@ -33,7 +40,7 @@ const reducer = (state, action) => {
 export const MovieProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const fetchMovies = async (search) => {
+  const fetchMovies = async (search, num) => {
     let query = search ? search : "merlin";
     try {
       const response = await axios.get(
@@ -50,30 +57,32 @@ export const MovieProvider = ({ children }) => {
           obj[v.season] = arr;
         }
       });
-      const na = Object.keys(obj);
-      const nv = Object.values(obj);
-      let nar = [];
-      for (let i = 0; i < na.length; i++) {
-        nar.push(nv[i]);
+      const seasonkey = Object.keys(obj);
+      const seasonvalue = Object.values(obj);
+      let new_season = [];
+      for (let i = 0; i < seasonkey.length; i++) {
+        new_season.push(seasonvalue[i]);
       }
-      console.log({ nar });
-      dispatch({ type: SEASON, payload: nar });
+
+      let count = new_season.length;
+
+      new_season = new_season.filter((n, i) => i + 1 === num);
+
+      dispatch({ type: SEASON, payload: new_season });
+      dispatch({ type: SEASON_COUNT, payload: count });
       dispatch({ type: FETCHALLMOVIES, payload: response.data });
     } catch (error) {
       console.log(error);
     }
   };
-  // useEffect(() => {
-  //   fetchMovies();
 
-  //   // eslint-disable-next-line
-  // }, []);
   return (
     <MovieContext.Provider
       value={{
         fetchMovies,
         movies: state.seasons,
         episodes: state.episodes,
+        counts: state.counts,
       }}
     >
       {children}

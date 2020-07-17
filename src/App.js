@@ -29,4 +29,7 @@ function App() {
 
 export default App;
 
-const AppStyle = styled.div``;
+const AppStyle = styled.div`
+  background: #181818;
+  color: white;
+`;
