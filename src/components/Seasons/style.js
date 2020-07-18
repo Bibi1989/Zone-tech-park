@@ -85,6 +85,10 @@ export const DisplaySeason = styled.div`
     list-style: none;
     padding: 0;
 
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2em;
+
     h1 {
       padding: 20px 0;
     }
@@ -108,7 +112,7 @@ export const Select = styled.select`
   border-radius: 4px;
   padding: 10px 14px;
   cursor: pointer;
-  margin-left: 0.8em;
+  margin-bottom: 16px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 `;
 
@@ -129,9 +133,9 @@ export const Description = styled.div`
 
 export const InnerDiv = styled.div`
   width: 100%;
-  display: grid;
+  /* display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 2em;
+  gap: 2em; */
   margin-bottom: 20px;
 `;
 export const InnerDivChild = styled.div`
@@ -148,5 +152,8 @@ export const Content = styled.div`
     justify-content: space-between;
     align-items: center;
     font-size: 1em;
+  }
+  p {
+    padding-top: 16px;
   }
 `;

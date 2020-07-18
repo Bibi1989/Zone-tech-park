@@ -7,11 +7,14 @@ export const MovieContext = createContext();
 const FETCHALLMOVIES = "FETCHALLMOVIES";
 const SEASON = "SEASON";
 const SEASON_COUNT = "SEASON_COUNT";
+const EPI_COUNT = "EPI_COUNT";
+const CLEAR = "CLEAR";
 
 const initialState = {
   seasons: null,
   episodes: null,
   counts: null,
+  epi_count: null,
 };
 
 const reducer = (state, action) => {
@@ -31,6 +34,16 @@ const reducer = (state, action) => {
         ...state,
         counts: action.payload,
       };
+    case EPI_COUNT:
+      return {
+        ...state,
+        epi_count: action.payload,
+      };
+    case CLEAR:
+      return {
+        ...state,
+        seasons: null,
+      };
 
     default:
       return state;
@@ -44,9 +57,21 @@ export const MovieProvider = ({ children }) => {
     let query = search ? search : "merlin";
     try {
       const response = await axios.get(
-        `https://api.tvmaze.com/singlesearch/shows/?q=${query}&embed=episodes`
+        `https://api.tvmaze.com/singlesearch/shows/?q=${search}&embed=episodes`
       );
+      let movies = response.data;
       let season = response.data;
+
+      movies = movies._embedded.episodes.filter(
+        (movie) => movie.season === num
+      );
+
+      movies = {
+        ...response.data,
+        episodes: movies,
+      };
+      console.log(movies);
+
       let obj = {};
       let arr = [];
       season = season._embedded.episodes.forEach((v) => {
@@ -63,23 +88,31 @@ export const MovieProvider = ({ children }) => {
       for (let i = 0; i < seasonkey.length; i++) {
         new_season.push(seasonvalue[i]);
       }
+      // console.log(new_season);
 
       let count = new_season.length;
 
       new_season = new_season.filter((n, i) => i + 1 === num);
 
-      dispatch({ type: SEASON, payload: new_season });
+      // console.log({ movies });
+
+      // dispatch({ type: SEASON, payload: new_season });
       dispatch({ type: SEASON_COUNT, payload: count });
-      dispatch({ type: FETCHALLMOVIES, payload: response.data });
+      dispatch({ type: FETCHALLMOVIES, payload: movies });
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const clearMovie = () => {
+    dispatch({ type: CLEAR });
   };
 
   return (
     <MovieContext.Provider
       value={{
         fetchMovies,
+        clearMovie,
         movies: state.seasons,
         episodes: state.episodes,
         counts: state.counts,
