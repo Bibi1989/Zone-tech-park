@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DisplayMovie, Flex, GenreStyle, Image, Div } from "../Seasons/style";
 import styled from "styled-components";
 import { useLocation } from "react-router-dom";
@@ -18,7 +18,6 @@ const ViewEpisode = () => {
 
     // eslint-disable-next-line
   }, []);
-  console.log(singleEpisode);
   return (
     <Container>
       <Div>

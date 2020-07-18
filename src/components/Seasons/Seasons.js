@@ -25,7 +25,7 @@ import Season from "./Season";
 import { removeHtmlTag } from "../utils/removeHtmlTag";
 
 const Seasons = () => {
-  let { fetchMovies, movies, counts, epi_count, loading, error } = useContext(
+  let { fetchMovies, movies, counts, epi_count, loading } = useContext(
     MovieContext
   );
   const [query, setQuery] = useState("merlin");
