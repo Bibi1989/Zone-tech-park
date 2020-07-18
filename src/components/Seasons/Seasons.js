@@ -82,7 +82,7 @@ const Seasons = () => {
           </Image>
         </Flex>
         <Flex>
-          <h1>{movies && movies.name}</h1>
+          <h1>{movies && movies.name ? movies.name : ""}</h1>
           <div>
             {movies && movies.summary
               ? removeHtmlTag(movies.summary.slice(0, 300))
@@ -124,14 +124,23 @@ const Seasons = () => {
               : "Unknown"}{" "}
             at {movies && movies.schedule.time}
           </p>
+          <a
+            className='official'
+            href={
+              movies && movies.officialSite ? movies.officialSite : "no link"
+            }
+          >
+            <i class='fas fa-link'></i> Click to Visit there official site
+          </a>
         </Flex>
       </DisplayMovie>
       <DisplaySeason>
         <H1>Seasons / Episodes</H1>
         <SelectDiv>
           <H1>
-            Season{" "}
-            {movies && movies.episodes[0] ? movies.episodes[0].season : 1}
+            {movies && movies.name ? movies.name : ""} Season{" "}
+            <span>&#124;</span>{" "}
+            {movies && movies.episodes[0] ? movies.episodes[0].season : 1}{" "}
           </H1>
           <Select
             onChange={(e) => {

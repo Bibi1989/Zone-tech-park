@@ -30,6 +30,10 @@ const Season = ({ episode, movies, removeHtmlTag }) => {
           <p>
             {episode.summary && removeHtmlTag(episode.summary.slice(0, 40))}
           </p>
+          <p>
+            Showing on {episode.airdate && episode.airdate} at{" "}
+            {episode.airtime && episode.airtime}
+          </p>
         </Content>
       </InnerDivChild>
     </InnerDiv>

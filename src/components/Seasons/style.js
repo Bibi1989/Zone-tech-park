@@ -66,6 +66,10 @@ export const Flex = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+
+  .official {
+    color: #aaaaaa;
+  }
 `;
 export const Image = styled.div`
   max-height: ${({ height }) => (height ? height : "500px")};
@@ -168,5 +172,6 @@ export const Content = styled.div`
   }
   p {
     padding-top: 16px;
+    font-size: 14px;
   }
 `;
