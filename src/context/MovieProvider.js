@@ -54,7 +54,6 @@ export const MovieProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const fetchMovies = async (search, filteringObj) => {
-    let query = search ? search : "merlin";
     try {
       const response = await axios.get(
         `https://api.tvmaze.com/singlesearch/shows/?q=${search}&embed=episodes`
@@ -70,11 +69,10 @@ export const MovieProvider = ({ children }) => {
         ...response.data,
         episodes: movies,
       };
-      console.log(movies);
 
       let obj = {};
       let arr = [];
-      season = season._embedded.episodes.forEach((v) => {
+      season._embedded.episodes.forEach((v) => {
         if (obj[v.season]) {
           arr.push(v);
           obj[v.season] = arr.filter((a) => a.season === v.season);
@@ -95,9 +93,6 @@ export const MovieProvider = ({ children }) => {
 
       new_season = new_season.filter((n, i) => i + 1 === filteringObj.num);
 
-      // console.log({ movies });
-
-      // dispatch({ type: SEASON, payload: new_season });
       dispatch({ type: EPIC_COUNT, payload: epic_count });
       dispatch({ type: SEASON_COUNT, payload: count });
       dispatch({ type: FETCHALLMOVIES, payload: movies });
