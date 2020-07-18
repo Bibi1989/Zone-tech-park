@@ -42,6 +42,10 @@ export const Button = styled.button`
   cursor: pointer;
   transition: 0.5s ease-in-out;
 
+  @media (max-width: 769px) {
+    width: 100%;
+  }
+
   &:hover {
     box-shadow: 0px 2px 16px rgba(0, 0, 0, 0.1);
     opacity: 0.8;
@@ -54,6 +58,11 @@ export const DisplayMovie = styled.div`
   grid-template-columns: repeat(2, 1fr);
   gap: 2em;
   padding: 1% 10%;
+
+  @media (max-width: 769px) {
+    grid-template-columns: 1fr;
+    padding: 1em;
+  }
 
   ul {
   }
@@ -117,6 +126,11 @@ export const DisplaySeason = styled.div`
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 2em;
+
+    @media (max-width: 769px) {
+      grid-template-columns: 1fr;
+      padding: 1em;
+    }
 
     h1 {
       padding: 20px 0;

@@ -23,4 +23,8 @@ const Nav = styled.div`
 const H1 = styled.div`
   cursor: pointer;
   width: 10%;
+
+  @media (max-width: 769px) {
+    width: 100%;
+  }
 `;

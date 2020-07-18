@@ -18,6 +18,7 @@ const ViewEpisode = () => {
 
     // eslint-disable-next-line
   }, []);
+  console.log(url);
   return (
     <Container>
       <Div>
