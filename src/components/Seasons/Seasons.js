@@ -14,12 +14,8 @@ import {
   Country,
   Description,
   Image,
-  EpisodeStyle,
   SelectDiv,
   Select,
-  InnerDiv,
-  InnerDivChild,
-  Content,
 } from "./style";
 
 // store
@@ -27,14 +23,18 @@ import { MovieContext } from "../../context/MovieProvider";
 import Season from "./Season";
 
 const Seasons = () => {
-  let { fetchMovies, movies, episodes, counts, clearMovie } = useContext(
-    MovieContext
-  );
+  let { fetchMovies, movies, counts, epi_count } = useContext(MovieContext);
   const [query, setQuery] = useState("merlin");
   const [num, setNum] = useState(1);
+  const [epic, setEpic] = useState();
+
+  const filteringObj = {
+    num,
+    epic,
+  };
 
   useEffect(() => {
-    fetchMovies(query, num);
+    fetchMovies(query, filteringObj);
 
     // eslint-disable-next-line
   }, [num]);
@@ -44,7 +44,9 @@ const Seasons = () => {
   };
   const clickToSearch = (e) => {
     e.preventDefault();
-    fetchMovies(query, num);
+    setNum(1);
+    setEpic();
+    fetchMovies(query, filteringObj);
   };
 
   const removeHtmlTag = (text) => {
@@ -54,8 +56,8 @@ const Seasons = () => {
 
   return (
     <SeasonStyle>
-      <H1 padding='0 0 40px 0'>Your Movie App</H1>
       <SearchDiv>
+        <H1 padding='0 0 40px 0'>Your Movie App</H1>
         <Form>
           <Input
             type='search'
@@ -70,7 +72,11 @@ const Seasons = () => {
         <Flex>
           <Image>
             <img
-              src={movies && movies.image ? movies.image.original : ""}
+              src={
+                movies && movies.image
+                  ? movies.image.original
+                  : "https://lh6.googleusercontent.com/proxy/hIgFSMyx4VsuoQh8h-ZfI3IiK9uFSLZ7pG67H_1RwEBDEPiWX-odcJ0PkWriAPeqwKyC6n-12UTrNmQF2ul9DAjwKMljG3zSCCTDoTVDPexFHV9l_JD5WMbmpnUJqWLqYA=s0-d"
+              }
               alt='No Poster'
             />
           </Image>
@@ -123,10 +129,14 @@ const Seasons = () => {
       <DisplaySeason>
         <H1>Seasons / Episodes</H1>
         <SelectDiv>
-          <H1>Season {movies && movies.episodes[0].season}</H1>
+          <H1>
+            Season{" "}
+            {movies && movies.episodes[0] ? movies.episodes[0].season : 1}
+          </H1>
           <Select
             onChange={(e) => {
               setNum(Number(e.target.value));
+              setEpic();
             }}
           >
             <option>Filter By Season</option>
@@ -136,10 +146,22 @@ const Seasons = () => {
               </option>
             ))}
           </Select>
+          <Select
+            onChange={(e) => {
+              setEpic(Number(e.target.value));
+            }}
+          >
+            <option>Filter By Episodes</option>
+            {new Array(epi_count).fill(null).map((_, i) => (
+              <option key={i} value={i + 1}>
+                {i + 1}
+              </option>
+            ))}
+          </Select>
         </SelectDiv>
         <ul>
           {movies &&
-            movies.episodes.map((episode, i) => (
+            movies.episodes.slice(epic - 1, epic).map((episode, i) => (
               <li key={episode.id}>
                 <Season
                   episode={episode}

@@ -1,10 +1,20 @@
 import styled from "styled-components";
 
-export const SeasonStyle = styled.div`
-  padding: 1% 10%;
-`;
+const image = "../../../assets/back.jpg";
+
+export const SeasonStyle = styled.div``;
 export const SearchDiv = styled.div`
   width: 100%;
+  padding: 1% 10%;
+  background: url(${image});
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  object-fit: contain;
+  height: 600px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 `;
 export const Form = styled.form`
   width: 100%;
@@ -12,7 +22,7 @@ export const Form = styled.form`
   flex-direction: column;
 `;
 export const Input = styled.input`
-  border: 2px solid orangered;
+  border: 1px solid orangered;
   outline: none;
   border-radius: 4px;
   padding: 1em;
@@ -43,6 +53,7 @@ export const DisplayMovie = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 2em;
+  padding: 1% 10%;
 
   ul {
   }
@@ -81,6 +92,7 @@ export const GenreStyle = styled.div`
 export const Country = styled.div``;
 
 export const DisplaySeason = styled.div`
+  padding: 1% 10%;
   ul {
     list-style: none;
     padding: 0;
@@ -113,6 +125,7 @@ export const Select = styled.select`
   padding: 10px 14px;
   cursor: pointer;
   margin-bottom: 16px;
+  margin-right: 16px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 `;
 

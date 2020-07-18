@@ -7,7 +7,7 @@ export const MovieContext = createContext();
 const FETCHALLMOVIES = "FETCHALLMOVIES";
 const SEASON = "SEASON";
 const SEASON_COUNT = "SEASON_COUNT";
-const EPI_COUNT = "EPI_COUNT";
+const EPIC_COUNT = "EPIC_COUNT";
 const CLEAR = "CLEAR";
 
 const initialState = {
@@ -34,7 +34,7 @@ const reducer = (state, action) => {
         ...state,
         counts: action.payload,
       };
-    case EPI_COUNT:
+    case EPIC_COUNT:
       return {
         ...state,
         epi_count: action.payload,
@@ -53,7 +53,7 @@ const reducer = (state, action) => {
 export const MovieProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const fetchMovies = async (search, num) => {
+  const fetchMovies = async (search, filteringObj) => {
     let query = search ? search : "merlin";
     try {
       const response = await axios.get(
@@ -63,7 +63,7 @@ export const MovieProvider = ({ children }) => {
       let season = response.data;
 
       movies = movies._embedded.episodes.filter(
-        (movie) => movie.season === num
+        (movie) => movie.season === filteringObj.num
       );
 
       movies = {
@@ -88,15 +88,17 @@ export const MovieProvider = ({ children }) => {
       for (let i = 0; i < seasonkey.length; i++) {
         new_season.push(seasonvalue[i]);
       }
-      // console.log(new_season);
 
       let count = new_season.length;
 
-      new_season = new_season.filter((n, i) => i + 1 === num);
+      let epic_count = movies.episodes.length;
+
+      new_season = new_season.filter((n, i) => i + 1 === filteringObj.num);
 
       // console.log({ movies });
 
       // dispatch({ type: SEASON, payload: new_season });
+      dispatch({ type: EPIC_COUNT, payload: epic_count });
       dispatch({ type: SEASON_COUNT, payload: count });
       dispatch({ type: FETCHALLMOVIES, payload: movies });
     } catch (error) {
@@ -116,6 +118,7 @@ export const MovieProvider = ({ children }) => {
         movies: state.seasons,
         episodes: state.episodes,
         counts: state.counts,
+        epi_count: state.epi_count,
       }}
     >
       {children}
