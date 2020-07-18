@@ -107,7 +107,7 @@ export const MovieProvider = ({ children }) => {
       dispatch({ type: FETCHALLMOVIES, payload: movies });
     } catch (error) {
       console.log(error);
-      // dispatch({ type: LOADING, payload: false });
+      dispatch({ type: LOADING, payload: null });
     }
   };
 

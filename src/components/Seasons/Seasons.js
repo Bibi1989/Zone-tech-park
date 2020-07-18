@@ -25,7 +25,7 @@ import Season from "./Season";
 import { removeHtmlTag } from "../utils/removeHtmlTag";
 
 const Seasons = () => {
-  let { fetchMovies, movies, counts, epi_count, loading } = useContext(
+  let { fetchMovies, movies, counts, epi_count, loading, error } = useContext(
     MovieContext
   );
   const [query, setQuery] = useState("merlin");
@@ -36,6 +36,9 @@ const Seasons = () => {
     num,
     epic,
   };
+  // const showError = () => {
+  //   return
+  // };
 
   useEffect(() => {
     fetchMovies(query, filteringObj);

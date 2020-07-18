@@ -36,7 +36,7 @@ const ViewEpisode = () => {
       </Div>
       <DisplayMovie>
         <Flex>
-          <Image>
+          <Image height='600px'>
             <img
               src={
                 singleEpisode && singleEpisode.image
@@ -70,14 +70,6 @@ const ViewEpisode = () => {
                 : "Unknown"}
             </p>
           </GenreStyle>
-          {/* <a
-            className='official'
-            href={
-              movies && movies.officialSite ? movies.officialSite : "no link"
-            }
-          >
-            <i class='fas fa-link'></i> Click to Visit there official site
-          </a> */}
         </Flex>
       </DisplayMovie>
     </Container>
