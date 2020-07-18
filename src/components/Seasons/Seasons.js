@@ -160,8 +160,10 @@ const Seasons = () => {
         <SelectDiv>
           <H1>
             {movies && movies.name ? movies.name : ""} Season{" "}
-            <span>&#124;</span>{" "}
+            {/* <span>&#124;</span>{" "} */}
             {movies && movies.episodes[0] ? movies.episodes[0].season : 1}{" "}
+            <span>&#124;</span>{" "}
+            {movies && movies.episodes ? movies.episodes.length : 0} Episodes
           </H1>
           <Select
             onChange={(e) => {
