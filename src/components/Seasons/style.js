@@ -82,7 +82,12 @@ export const Image = styled.div`
 
 export const GenreStyle = styled.div`
   display: flex;
+  flex-direction: ${({ direction }) => (direction ? direction : "row")};
   list-style: none;
+
+  p {
+    padding-bottom: 10px;
+  }
 
   span {
     padding-right: 10px;
@@ -94,6 +99,14 @@ export const GenreStyle = styled.div`
   }
 `;
 export const Country = styled.div``;
+export const Div = styled.div`
+  display: flex;
+  justify-content: center;
+
+  h1 {
+    padding: 0 16px;
+  }
+`;
 
 export const DisplaySeason = styled.div`
   padding: 1% 10%;
@@ -151,6 +164,11 @@ export const Description = styled.div`
 export const InnerDiv = styled.div`
   width: 100%;
   margin-bottom: 20px;
+
+  .link {
+    text-decoration: none;
+    color: white;
+  }
 
   .official {
     color: #aaaaaa;

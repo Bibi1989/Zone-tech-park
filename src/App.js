@@ -9,6 +9,7 @@ import Seasons from "./components/Seasons/Seasons";
 
 // store
 import { MovieProvider } from "./context/MovieProvider";
+import ViewEpisode from "./components/ViewEpisode/ViewEpisode";
 
 function App() {
   return (
@@ -19,6 +20,9 @@ function App() {
           <Switch>
             <Route exact path='/'>
               <Seasons />
+            </Route>
+            <Route exact path='/episode'>
+              <ViewEpisode />
             </Route>
           </Switch>
         </AppStyle>

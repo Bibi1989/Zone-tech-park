@@ -22,6 +22,7 @@ import {
 // store
 import { MovieContext } from "../../context/MovieProvider";
 import Season from "./Season";
+import { removeHtmlTag } from "../utils/removeHtmlTag";
 
 const Seasons = () => {
   let { fetchMovies, movies, counts, epi_count, loading } = useContext(
@@ -50,11 +51,6 @@ const Seasons = () => {
     setNum(1);
     setEpic();
     fetchMovies(query, filteringObj);
-  };
-
-  const removeHtmlTag = (text) => {
-    let texts = text.replace(/(<([^>]+)>)/gi, "");
-    return texts;
   };
 
   return (
@@ -161,7 +157,7 @@ const Seasons = () => {
           <H1>
             {movies && movies.name ? movies.name : ""} Season{" "}
             {/* <span>&#124;</span>{" "} */}
-            {movies && movies.episodes[0] ? movies.episodes[0].season : 1}{" "}
+            {movies && movies.episodes[0] ? movies.episodes[0].season : 0}{" "}
             <span>&#124;</span>{" "}
             {movies && movies.episodes ? movies.episodes.length : 0} Episodes
           </H1>
