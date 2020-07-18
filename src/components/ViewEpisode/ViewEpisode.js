@@ -8,9 +8,12 @@ import axios from "axios";
 
 const ViewEpisode = () => {
   const url = useLocation().search.slice(5);
+  let https = useLocation().search.slice(5, 9) + "s";
+  let host = url.slice(4);
+  let urls = `${https}${host}`;
   const [singleEpisode, setSingleEpisode] = useState({});
   const fetchEpisode = async () => {
-    const res = await axios.get(url);
+    const res = await axios.get(urls);
     setSingleEpisode(res.data);
   };
   useEffect(() => {
@@ -18,7 +21,7 @@ const ViewEpisode = () => {
 
     // eslint-disable-next-line
   }, []);
-  console.log(url);
+  console.log({ host, urls });
   return (
     <Container>
       <Div>
