@@ -150,10 +150,11 @@ export const Description = styled.div`
 
 export const InnerDiv = styled.div`
   width: 100%;
-  /* display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2em; */
   margin-bottom: 20px;
+
+  .official {
+    color: #aaaaaa;
+  }
 `;
 export const InnerDivChild = styled.div`
   width: 100%;
@@ -174,4 +175,12 @@ export const Content = styled.div`
     padding-top: 16px;
     font-size: 14px;
   }
+`;
+
+export const Loader = styled.div`
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding-top: 10%;
+  font-size: 2em;
 `;

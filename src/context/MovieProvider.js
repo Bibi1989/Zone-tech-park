@@ -9,12 +9,14 @@ const SEASON = "SEASON";
 const SEASON_COUNT = "SEASON_COUNT";
 const EPIC_COUNT = "EPIC_COUNT";
 const CLEAR = "CLEAR";
+const LOADING = "LOADING";
 
 const initialState = {
   seasons: null,
   episodes: null,
   counts: null,
   epi_count: null,
+  loading: null,
 };
 
 const reducer = (state, action) => {
@@ -44,6 +46,11 @@ const reducer = (state, action) => {
         ...state,
         seasons: null,
       };
+    case LOADING:
+      return {
+        ...state,
+        loading: action.payload,
+      };
 
     default:
       return state;
@@ -55,6 +62,7 @@ export const MovieProvider = ({ children }) => {
 
   const fetchMovies = async (search, filteringObj) => {
     try {
+      dispatch({ type: LOADING, payload: true });
       const response = await axios.get(
         `https://api.tvmaze.com/singlesearch/shows/?q=${search}&embed=episodes`
       );
@@ -92,12 +100,14 @@ export const MovieProvider = ({ children }) => {
       let epic_count = movies.episodes.length;
 
       new_season = new_season.filter((n, i) => i + 1 === filteringObj.num);
+      dispatch({ type: LOADING, payload: false });
 
       dispatch({ type: EPIC_COUNT, payload: epic_count });
       dispatch({ type: SEASON_COUNT, payload: count });
       dispatch({ type: FETCHALLMOVIES, payload: movies });
     } catch (error) {
       console.log(error);
+      // dispatch({ type: LOADING, payload: false });
     }
   };
 
@@ -114,6 +124,7 @@ export const MovieProvider = ({ children }) => {
         episodes: state.episodes,
         counts: state.counts,
         epi_count: state.epi_count,
+        loading: state.loading,
       }}
     >
       {children}

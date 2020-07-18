@@ -16,6 +16,7 @@ import {
   Image,
   SelectDiv,
   Select,
+  Loader,
 } from "./style";
 
 // store
@@ -23,7 +24,9 @@ import { MovieContext } from "../../context/MovieProvider";
 import Season from "./Season";
 
 const Seasons = () => {
-  let { fetchMovies, movies, counts, epi_count } = useContext(MovieContext);
+  let { fetchMovies, movies, counts, epi_count, loading } = useContext(
+    MovieContext
+  );
   const [query, setQuery] = useState("merlin");
   const [num, setNum] = useState(1);
   const [epic, setEpic] = useState();
@@ -68,72 +71,90 @@ const Seasons = () => {
         </Form>
       </SearchDiv>
 
-      <DisplayMovie>
-        <Flex>
-          <Image>
-            <img
-              src={
-                movies && movies.image
-                  ? movies.image.original
-                  : "https://lh6.googleusercontent.com/proxy/hIgFSMyx4VsuoQh8h-ZfI3IiK9uFSLZ7pG67H_1RwEBDEPiWX-odcJ0PkWriAPeqwKyC6n-12UTrNmQF2ul9DAjwKMljG3zSCCTDoTVDPexFHV9l_JD5WMbmpnUJqWLqYA=s0-d"
+      {loading ? (
+        <Loader>Loading...</Loader>
+      ) : (
+        <DisplayMovie>
+          <Flex>
+            <Image>
+              <img
+                src={
+                  movies && movies.image
+                    ? movies.image.original
+                    : "https://lh6.googleusercontent.com/proxy/hIgFSMyx4VsuoQh8h-ZfI3IiK9uFSLZ7pG67H_1RwEBDEPiWX-odcJ0PkWriAPeqwKyC6n-12UTrNmQF2ul9DAjwKMljG3zSCCTDoTVDPexFHV9l_JD5WMbmpnUJqWLqYA=s0-d"
+                }
+                alt='No Poster'
+              />
+            </Image>
+          </Flex>
+          <Flex>
+            <h1>{movies && movies.name ? movies.name : ""}</h1>
+            <div>
+              {movies && movies.summary
+                ? removeHtmlTag(movies.summary.slice(0, 300))
+                : "No description"}
+            </div>
+            <GenreStyle>
+              <span>Genres: </span>
+              {movies && movies.genres
+                ? movies.genres.map((genre) => <li key={genre}>{genre}</li>)
+                : "Film"}
+            </GenreStyle>
+            <Country>
+              <p>
+                Country{" "}
+                {movies && movies.network !== null
+                  ? movies.network.country.name
+                  : "Other"}
+              </p>
+            </Country>
+            <Description>
+              <p>
+                {movies && movies.premiered
+                  ? movies.premiered.slice(0, 4)
+                  : "unknown"}
+              </p>
+              <p>
+                {counts && counts} Season
+                {counts && counts > 1 ? "s" : ""}
+              </p>
+              <p>Rating {movies && movies.rating.average}</p>
+              <p>{movies && movies.language}</p>
+            </Description>
+            <p>
+              Show every{" "}
+              {movies && movies.schedule
+                ? movies.schedule.days.map((d) =>
+                    movies.schedule.days.length > 1 ? `${d},` : d
+                  )
+                : "Unknown"}{" "}
+              at{" "}
+              {movies && movies.schedule.time ? (
+                movies.schedule.time
+              ) : (
+                <a
+                  className='official'
+                  href={
+                    movies && movies.officialSite
+                      ? movies.officialSite
+                      : "no link"
+                  }
+                >
+                  Visit their official website for time
+                </a>
+              )}
+            </p>
+            <a
+              className='official'
+              href={
+                movies && movies.officialSite ? movies.officialSite : "no link"
               }
-              alt='No Poster'
-            />
-          </Image>
-        </Flex>
-        <Flex>
-          <h1>{movies && movies.name ? movies.name : ""}</h1>
-          <div>
-            {movies && movies.summary
-              ? removeHtmlTag(movies.summary.slice(0, 300))
-              : "No description"}
-          </div>
-          <GenreStyle>
-            <span>Genres: </span>
-            {movies && movies.genres
-              ? movies.genres.map((genre) => <li key={genre}>{genre}</li>)
-              : "Film"}
-          </GenreStyle>
-          <Country>
-            <p>
-              Country{" "}
-              {movies && movies.network !== null
-                ? movies.network.country.name
-                : "Other"}
-            </p>
-          </Country>
-          <Description>
-            <p>
-              {movies && movies.premiered
-                ? movies.premiered.slice(0, 4)
-                : "unknown"}
-            </p>
-            <p>
-              {counts && counts} Season
-              {counts && counts > 1 ? "s" : ""}
-            </p>
-            <p>Rating {movies && movies.rating.average}</p>
-            <p>{movies && movies.language}</p>
-          </Description>
-          <p>
-            Show every{" "}
-            {movies && movies.schedule
-              ? movies.schedule.days.map((d) =>
-                  movies.schedule.days.length > 1 ? `${d},` : d
-                )
-              : "Unknown"}{" "}
-            at {movies && movies.schedule.time}
-          </p>
-          <a
-            className='official'
-            href={
-              movies && movies.officialSite ? movies.officialSite : "no link"
-            }
-          >
-            <i class='fas fa-link'></i> Click to Visit there official site
-          </a>
-        </Flex>
-      </DisplayMovie>
+            >
+              <i class='fas fa-link'></i> Click to Visit there official site
+            </a>
+          </Flex>
+        </DisplayMovie>
+      )}
       <DisplaySeason>
         <H1>Seasons / Episodes</H1>
         <SelectDiv>

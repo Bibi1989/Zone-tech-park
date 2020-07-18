@@ -31,8 +31,22 @@ const Season = ({ episode, movies, removeHtmlTag }) => {
             {episode.summary && removeHtmlTag(episode.summary.slice(0, 40))}
           </p>
           <p>
-            Showing on {episode.airdate && episode.airdate} at{" "}
-            {episode.airtime && episode.airtime}
+            Showing on{" "}
+            {episode.airdate && episode.airdate ? episode.airdate : ""} at{" "}
+            {episode.airtime && episode.airtime ? (
+              episode.airtime
+            ) : (
+              <a
+                className='official'
+                href={
+                  movies && movies.officialSite
+                    ? movies.officialSite
+                    : "no link"
+                }
+              >
+                Visit website to know time
+              </a>
+            )}
           </p>
         </Content>
       </InnerDivChild>
